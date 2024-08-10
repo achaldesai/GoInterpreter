@@ -28,6 +28,7 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 
+// LET statement Tree definition
 type LetStatement struct {
 	Value Expression
 	Name  *Identifier
@@ -41,6 +42,16 @@ type Identifier struct {
 	Value string
 	Token token.Token // the token.IDENT token
 }
+
+// RETURN statement Tree definition
+
+type ReturnStatement struct {
+	ReturnValue Expression
+	Token       token.Token
+}
+
+func (rs *ReturnStatement) statementNode()       {}
+func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
 
 func (i *Identifier) expressionNode()      {}
 func (i *Identifier) TokenLiteral() string { return i.Token.Literal }
