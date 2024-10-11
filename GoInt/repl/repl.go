@@ -1,6 +1,7 @@
 package repl
 
 import (
+	"GoInt/evaluator"
 	"GoInt/lexer"
 	"GoInt/parser"
 	"bufio"
@@ -8,8 +9,10 @@ import (
 	"io"
 )
 
-const PROMPT = ">> "
-const errorHeader = "---------------------Whoops that's an error alright !!---------------------" + "\n"
+const (
+	PROMPT      = ">> "
+	errorHeader = "---------------------Whoops that's an error alright !!---------------------" + "\n"
+)
 
 func Start(in io.Reader, out io.Writer) {
 	scanner := bufio.NewScanner(in)
@@ -32,7 +35,8 @@ func Start(in io.Reader, out io.Writer) {
 			continue
 		}
 
-		io.WriteString(out, program.String())
+		evaluated := evaluator.Eval(program)
+		io.WriteString(out, evaluated.Inspect())
 		io.WriteString(out, "\n")
 	}
 }
