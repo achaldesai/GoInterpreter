@@ -28,7 +28,7 @@ go build
 To run the interpreter, use the following command:
 
 ```bash
-./GoInt
+./GoInterpreter
 ```
 
 ## Examples
