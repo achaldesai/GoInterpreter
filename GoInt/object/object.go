@@ -1,6 +1,11 @@
 package object
 
-import "fmt"
+import (
+	"GoInt/ast"
+	"bytes"
+	"fmt"
+	"strings"
+)
 
 type ObjectType string
 
@@ -10,6 +15,7 @@ const (
 	NULL_OBJ         = "NULL"
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 	ERROR_OBJ        = "ERROR"
+	FUNCTION_OBJ     = "FUNCTION"
 )
 
 type Object interface {
@@ -54,3 +60,28 @@ type Error struct {
 
 func (err *Error) Type() ObjectType { return ERROR_OBJ }
 func (err *Error) Inspect() string  { return "ERROR: " + err.Message }
+
+// FUNCTION object type
+type Function struct {
+	Body       *ast.BlockStatement
+	Env        *Environment
+	Parameters []*ast.Identifier
+}
+
+func (fn *Function) Type() ObjectType { return FUNCTION_OBJ }
+func (fn *Function) Inspect() string {
+	var out bytes.Buffer
+
+	params := []string{}
+	for _, p := range fn.Parameters {
+		params = append(params, p.String())
+	}
+	out.WriteString("fn")
+	out.WriteString("(")
+	out.WriteString(strings.Join(params, ","))
+	out.WriteString(") {\n")
+	out.WriteString(fn.Body.String())
+	out.WriteString("\n}")
+
+	return out.String()
+}

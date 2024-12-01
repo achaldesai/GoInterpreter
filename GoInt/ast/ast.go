@@ -199,10 +199,10 @@ func (b *Boolean) String() string       { return b.Token.Literal }
 
 // IF Statement Tree structure
 type IfExpression struct {
-	Token       token.Token
 	Condition   Expression
 	Consequence *BlockStatement
 	Alternative *BlockStatement
+	Token       token.Token
 }
 
 func (ie *IfExpression) expressionNode()      {}
@@ -226,8 +226,8 @@ func (ie *IfExpression) String() string {
 // FunctionLiteral Statement tree structure
 type FunctionLiteral struct {
 	Token      token.Token
-	Parameters []*Identifier
 	Body       *BlockStatement
+	Parameters []*Identifier
 }
 
 func (fl *FunctionLiteral) expressionNode()      {}
