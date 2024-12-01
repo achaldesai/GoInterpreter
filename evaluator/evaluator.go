@@ -1,8 +1,8 @@
 package evaluator
 
 import (
-	"GoInt/ast"
-	"GoInt/object"
+	"GoInterpreter/ast"
+	"GoInterpreter/object"
 	"fmt"
 )
 

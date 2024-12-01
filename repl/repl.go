@@ -1,10 +1,10 @@
 package repl
 
 import (
-	"GoInt/evaluator"
-	"GoInt/lexer"
-	"GoInt/object"
-	"GoInt/parser"
+	"GoInterpreter/evaluator"
+	"GoInterpreter/lexer"
+	"GoInterpreter/object"
+	"GoInterpreter/parser"
 	"bufio"
 	"fmt"
 	"io"

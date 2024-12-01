@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	"GoInt/token"
+	"GoInterpreter/token"
 	"testing"
 )
 

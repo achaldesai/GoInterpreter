@@ -1,9 +1,9 @@
 package evaluator
 
 import (
-	"GoInt/lexer"
-	"GoInt/object"
-	"GoInt/parser"
+	"GoInterpreter/lexer"
+	"GoInterpreter/object"
+	"GoInterpreter/parser"
 	"testing"
 )
 

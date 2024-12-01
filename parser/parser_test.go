@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"GoInt/ast"
-	"GoInt/lexer"
+	"GoInterpreter/ast"
+	"GoInterpreter/lexer"
 	"fmt"
 	"testing"
 )

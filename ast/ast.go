@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"GoInt/token"
+	"GoInterpreter/token"
 	"bytes"
 	"strings"
 )

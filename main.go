@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoInt/repl"
+	"GoInterpreter/repl"
 	"fmt"
 	"os"
 	"os/user"

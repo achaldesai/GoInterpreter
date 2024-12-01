@@ -18,8 +18,8 @@ design and implementation.
 To install GoInterpreter, clone the repository and build the project:
 
 ```bash
-git clone https://github.com/yourusername/GoInterpreter.git
-cd GoInterpreter/GoInt
+git clone https://github.com/achaldesai/GoInterpreter.git
+cd GoInterpreter
 go build
 ```
 

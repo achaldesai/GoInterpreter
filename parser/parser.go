@@ -1,9 +1,9 @@
 package parser
 
 import (
-	"GoInt/ast"
-	"GoInt/lexer"
-	"GoInt/token"
+	"GoInterpreter/ast"
+	"GoInterpreter/lexer"
+	"GoInterpreter/token"
 	"fmt"
 	"strconv"
 )

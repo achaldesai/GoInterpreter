@@ -1,7 +1,7 @@
 package object
 
 import (
-	"GoInt/ast"
+	"GoInterpreter/ast"
 	"bytes"
 	"fmt"
 	"hash/fnv"
