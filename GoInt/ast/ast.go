@@ -272,3 +272,79 @@ func (ce *CallExpression) String() string {
 
 	return out.String()
 }
+
+// StringLiteral Expression tree structure
+type StringLiteral struct {
+	Token token.Token
+	Value string
+}
+
+func (str *StringLiteral) expressionNode()      {}
+func (str *StringLiteral) TokenLiteral() string { return str.Token.Literal }
+func (str *StringLiteral) String() string       { return str.Token.Literal }
+
+// ArrayLiteral tree structure
+type ArrayLiteral struct {
+	Token    token.Token
+	Elements []Expression
+}
+
+func (arr *ArrayLiteral) expressionNode()      {}
+func (arr *ArrayLiteral) TokenLiteral() string { return arr.Token.Literal }
+func (arr *ArrayLiteral) String() string {
+	var out bytes.Buffer
+
+	elements := []string{}
+	for _, el := range arr.Elements {
+		elements = append(elements, el.String())
+	}
+
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+
+	return out.String()
+}
+
+// IndexExpression tree structure
+type IndexExpression struct {
+	Left  Expression
+	Index Expression
+	Token token.Token
+}
+
+func (iex *IndexExpression) expressionNode()      {}
+func (iex *IndexExpression) TokenLiteral() string { return iex.Token.Literal }
+func (iex *IndexExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("(")
+	out.WriteString(iex.Left.String())
+	out.WriteString("[")
+	out.WriteString(iex.Index.String())
+	out.WriteString("])")
+
+	return out.String()
+}
+
+// HashLiteral tree structure
+type HashLiteral struct {
+	Token token.Token
+	Pairs map[Expression]Expression
+}
+
+func (hl *HashLiteral) expressionNode()      {}
+func (hl *HashLiteral) TokenLiteral() string { return hl.Token.Literal }
+func (hl *HashLiteral) String() string {
+	var out bytes.Buffer
+
+	pairs := []string{}
+	for key, value := range hl.Pairs {
+		pairs = append(pairs, key.String()+":"+value.String())
+	}
+	out.WriteString("{")
+	out.WriteString(strings.Join(pairs, ", "))
+	out.WriteString("}")
+
+	return out.String()
+}

@@ -4,10 +4,22 @@ import (
 	"GoInt/ast"
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"strings"
 )
 
 type ObjectType string
+
+type Object interface {
+	Type() ObjectType
+	Inspect() string
+}
+
+type Hashable interface {
+	HashKey() HashKey
+}
+
+type BuiltinFunction func(args ...Object) Object
 
 const (
 	INTEGER_OBJ      = "INTEGER"
@@ -16,12 +28,11 @@ const (
 	RETURN_VALUE_OBJ = "RETURN_VALUE"
 	ERROR_OBJ        = "ERROR"
 	FUNCTION_OBJ     = "FUNCTION"
+	STRING_OBJ       = "STRING"
+	BUILTIN_OBJ      = "BUILTIN"
+	ARRAY_OBJ        = "ARRAY"
+	HASH_OBJ         = "HASH"
 )
-
-type Object interface {
-	Type() ObjectType
-	Inspect() string
-}
 
 // INTEGER struct type
 type Integer struct {
@@ -82,6 +93,96 @@ func (fn *Function) Inspect() string {
 	out.WriteString(") {\n")
 	out.WriteString(fn.Body.String())
 	out.WriteString("\n}")
+
+	return out.String()
+}
+
+// STRING object type
+type String struct {
+	Value string
+}
+
+func (str *String) Type() ObjectType { return STRING_OBJ }
+func (str *String) Inspect() string  { return str.Value }
+
+// BUILTINFUNCTIONS type definition
+type Builtin struct {
+	Fn BuiltinFunction
+}
+
+func (bf *Builtin) Type() ObjectType { return BUILTIN_OBJ }
+func (bf *Builtin) Inspect() string  { return "builtin function" }
+
+// ARRAY object type definition
+type Array struct {
+	Elements []Object
+}
+
+func (arr *Array) Type() ObjectType { return ARRAY_OBJ }
+func (arr *Array) Inspect() string {
+	var out bytes.Buffer
+
+	elements := []string{}
+	for _, el := range arr.Elements {
+		elements = append(elements, el.Inspect())
+	}
+
+	out.WriteString("[")
+	out.WriteString(strings.Join(elements, ", "))
+	out.WriteString("]")
+
+	return out.String()
+}
+
+// HashKey type definition
+type HashKey struct {
+	Type  ObjectType
+	Value uint64
+}
+
+func (b *Boolean) HashKey() HashKey {
+	var value uint64
+	if b.Value {
+		value = 1
+	} else {
+		value = 0
+	}
+	return HashKey{Type: b.Type(), Value: value}
+}
+
+func (i *Integer) HashKey() HashKey {
+	return HashKey{Type: i.Type(), Value: uint64(i.Value)}
+}
+
+func (s *String) HashKey() HashKey {
+	h := fnv.New64a()
+	h.Write([]byte(s.Value))
+	return HashKey{Type: s.Type(), Value: h.Sum64()}
+}
+
+// HashTree object type definition
+type HashPair struct {
+	Key   Object
+	Value Object
+}
+
+// Hash object type definition
+type Hash struct {
+	Pairs map[HashKey]HashPair
+}
+
+func (h *Hash) Type() ObjectType { return HASH_OBJ }
+func (h *Hash) Inspect() string {
+	var out bytes.Buffer
+
+	pairs := []string{}
+	for _, pair := range h.Pairs {
+		pairs = append(pairs, fmt.Sprintf("%s: %s", pair.Key.Inspect(), pair.Value.Inspect()))
+	}
+
+	out.WriteString("{")
+	out.WriteString(strings.Join(pairs, ", "))
+	out.WriteString("}")
 
 	return out.String()
 }

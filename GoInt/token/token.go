@@ -12,8 +12,9 @@ const (
 	EOF     = "EOF"
 
 	// Identifiers + literals
-	IDENT = "IDENT"
-	INT   = "INT"
+	IDENT  = "IDENT"
+	INT    = "INT"
+	STRING = "STRING"
 
 	// Operators
 	ASSIGN   = "="
@@ -23,9 +24,9 @@ const (
 	SLASH    = "/"
 	ASTERISK = "*"
 
-	LT = "<"
-	GT = ">"
-
+	// Logical
+	LT     = "<"
+	GT     = ">"
 	EQ     = "=="
 	NOT_EQ = "!="
 
@@ -33,10 +34,16 @@ const (
 	COMMA     = ","
 	SEMICOLON = ";"
 
-	LPAREN = "("
-	RPAREN = ")"
-	LBRACE = "{"
-	RBRACE = "}"
+	// Brackets
+	LPAREN   = "("
+	RPAREN   = ")"
+	LBRACE   = "{"
+	RBRACE   = "}"
+	LBRACKET = "["
+	RBRACKET = "]"
+
+	// Hash
+	COLON = ":"
 
 	// Keywords
 	FUNCTION = "FUNCTION"
